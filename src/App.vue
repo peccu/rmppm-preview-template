@@ -644,3 +644,7 @@ function buildPathData(
   return parts.join(' ')
 }
 </script>
+
+<style>
+@import "tailwindcss";
+</style>
