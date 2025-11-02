@@ -10,6 +10,7 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  base: process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY}/` : '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
