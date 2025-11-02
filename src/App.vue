@@ -90,7 +90,7 @@
           <div class="mt-4 text-sm text-gray-600">
             <p>Canvas: {{ canvasWidth }} × {{ canvasHeight }}px</p>
             <p>Scale: {{ scale.toFixed(2) }}x</p>
-            <p>Device: {{ deviceDimensions.name }}</p>
+            <p>Device: {{ deviceDimensions?.name ?? '' }}</p>
           </div>
         </div>
       </div>
@@ -220,9 +220,10 @@ const templateJson = ref(`{
 const templateData = ref<TemplateData | null>(null);
 const error = ref<string>('');
 
-const deviceDimensions = computed(() => DEVICES[deviceType.value]);
+const deviceDimensions = computed(() => DEVICES[deviceType.value] ?? undefined);
 
 const canvasWidth = computed(() => {
+  if (!deviceDimensions.value) return 0;
   if (!templateData.value) return deviceDimensions.value.portraitWidth;
   return templateData.value.orientation === 'landscape'
     ? deviceDimensions.value.landscapeWidth
@@ -230,6 +231,7 @@ const canvasWidth = computed(() => {
 });
 
 const canvasHeight = computed(() => {
+  if (!deviceDimensions.value) return 0;
   if (!templateData.value) return deviceDimensions.value.portraitHeight;
   return templateData.value.orientation === 'landscape'
     ? deviceDimensions.value.landscapeHeight
@@ -249,6 +251,7 @@ const canvasStyle = computed(() => ({
 
 const renderedItems = computed<RenderedItem[]>(() => {
   if (!templateData.value) return [];
+  if (!deviceDimensions.value) return [];
 
   try {
     const constants: Record<string, number> = {
@@ -297,7 +300,8 @@ function evaluateExpression(expr: string | number, vars: Record<string, number>)
 
   try {
     // eslint-disable-next-line no-eval
-    return eval(evaluated);
+    const result = eval(evaluated);
+    return typeof result === 'number' && !isNaN(result) ? result : 0;
   } catch (e) {
     console.error(`Failed to evaluate: ${expr} -> ${evaluated}`, e);
     return 0;
