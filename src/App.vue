@@ -491,6 +491,7 @@ watch(constantsEdit, updateTemplateFromUI, { deep: true })
 watch(itemsEdit, updateTemplateFromUI, { deep: true })
 
 // テキストエリア直編集時のパース
+
 watch(
   templateJson,
   (newVal) => {
@@ -508,9 +509,9 @@ watch(
       constantsEdit.value = []
       if (parsed.constants) {
         for (const constObj of parsed.constants) {
-          const key = Object.keys(constObj)[0]
-          const value = constObj[key]
-          constantsEdit.value.push({ key, value: String(value) })
+          const key = Object.keys(constObj)[0] ?? ''
+          const value = key ? constObj[key] : '' // 型安全＆undefinedガード
+          constantsEdit.value.push({ key, value: String(value ?? '') })
         }
       }
       itemsEdit.value = []
