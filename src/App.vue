@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gray-100 p-8">
-    <div class="max-w-7xl mx-auto">
+  <div class="min-h-screen bg-gray-100 p-8 w-full">
+    <div class="mx-auto w-full">
       <h1 class="text-3xl font-bold text-gray-800 mb-6">reMarkable Template Preview</h1>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="w-full">
         <!-- Editor Panel -->
         <div class="bg-white rounded-lg shadow-lg p-6">
           <h2 class="text-xl font-semibold text-gray-700 mb-4">Template JSON</h2>
@@ -297,17 +297,9 @@ const canvasHeight = computed(() => {
     : deviceDimensions.value.portraitHeight
 })
 
-// const scale = computed(() => {
-//   const maxWidth = 500
-//   const maxHeight = 700
-//   return Math.min(maxWidth / canvasWidth.value, maxHeight / canvasHeight.value)
-// })
-//
 const canvasStyle = computed(() => ({
-  // width: `${canvasWidth.value * scale.value}px`,
-  // height: `${canvasHeight.value * scale.value}px`,
-  width: `${canvasWidth.value}px`,
-  height: `${canvasHeight.value}px`,
+  width: `${canvasWidth.value + 16}px`,
+  height: `${canvasHeight.value + 16}px`,
 }))
 
 const renderedItems = computed<RenderedItem[]>(() => {
