@@ -11,8 +11,10 @@
           <!-- Device Selection -->
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-2"> Device Type </label>
-            <select v-model="deviceType"
-              class="w-full p-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+            <select
+              v-model="deviceType"
+              class="w-full p-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+            >
               <option value="rmpp">reMarkable Paper Pro (rmpp)</option>
               <option value="rmppm">reMarkable Paper Pro Move (rmppm)</option>
             </select>
@@ -21,14 +23,21 @@
           <!-- Constants UI -->
           <div v-if="templateData" class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-2">Constants</label>
-            <div v-for="(constObj, idx) in constantsEdit" :key="idx" class="flex items-center gap-2 mb-2">
+            <div
+              v-for="(constObj, idx) in constantsEdit"
+              :key="idx"
+              class="flex items-center gap-2 mb-2"
+            >
               <input v-model="constObj.key" class="w-32 p-1 border rounded" placeholder="Key" />
               <input v-model="constObj.value" class="w-40 p-1 border rounded" placeholder="Value" />
               <button @click="removeConstant(idx)" class="text-red-500 hover:underline">
                 削除
               </button>
             </div>
-            <button @click="addConstant" class="px-2 py-1 bg-blue-100 rounded text-blue-700 text-xs hover:bg-blue-200">
+            <button
+              @click="addConstant"
+              class="px-2 py-1 bg-blue-100 rounded text-blue-700 text-xs hover:bg-blue-200"
+            >
               + 定数追加
             </button>
           </div>
@@ -36,7 +45,11 @@
           <!-- Items UI -->
           <div v-if="templateData" class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-2">Items</label>
-            <div v-for="(item, idx) in itemsEdit" :key="idx" class="border p-2 rounded mb-2 bg-gray-50">
+            <div
+              v-for="(item, idx) in itemsEdit"
+              :key="idx"
+              class="border p-2 rounded mb-2 bg-gray-50"
+            >
               <div class="flex gap-2 items-center">
                 <input v-model="item.type" class="w-24 p-1 border rounded" placeholder="Type" />
                 <input v-model="item.id" class="w-24 p-1 border rounded" placeholder="ID" />
@@ -46,9 +59,17 @@
               </div>
               <div class="mt-2 pl-2 text-xs text-gray-500">
                 <template v-if="item.type === 'text'">
-                  <input v-model="item.text" class="w-full p-1 border rounded mb-1" placeholder="Text" />
-                  <input v-model="item.fontSize" class="w-20 p-1 border rounded" placeholder="Font Size"
-                    type="number" />
+                  <input
+                    v-model="item.text"
+                    class="w-full p-1 border rounded mb-1"
+                    placeholder="Text"
+                  />
+                  <input
+                    v-model="item.fontSize"
+                    class="w-20 p-1 border rounded"
+                    placeholder="Font Size"
+                    type="number"
+                  />
                   <div>
                     x: <input v-model="item.position.x" class="w-16 border rounded p-1" /> y:
                     <input v-model="item.position.y" class="w-16 border rounded p-1" />
@@ -69,13 +90,27 @@
                   </div>
                   <div>
                     <span class="font-bold">Children:</span>
-                    <div v-for="(child, cidx) in item.children" :key="cidx" class="ml-2 flex gap-2 items-center">
-                      <input v-model="child.type" class="w-16 border rounded p-1" placeholder="Type" />
-                      <button @click="removeChild(idx, cidx)" class="text-red-400 hover:underline text-xs">
+                    <div
+                      v-for="(child, cidx) in item.children"
+                      :key="cidx"
+                      class="ml-2 flex gap-2 items-center"
+                    >
+                      <input
+                        v-model="child.type"
+                        class="w-16 border rounded p-1"
+                        placeholder="Type"
+                      />
+                      <button
+                        @click="removeChild(idx, cidx)"
+                        class="text-red-400 hover:underline text-xs"
+                      >
                         子削除
                       </button>
                     </div>
-                    <button @click="addChild(idx)" class="text-xs px-2 py-1 rounded bg-gray-200 mt-1">
+                    <button
+                      @click="addChild(idx)"
+                      class="text-xs px-2 py-1 rounded bg-gray-200 mt-1"
+                    >
                       + 子追加
                     </button>
                   </div>
@@ -83,27 +118,38 @@
                 <template v-if="item.type === 'path'">
                   <div>
                     <span class="font-bold">Data:</span>
-                    <input v-model="item.dataString" class="w-full p-1 border rounded"
-                      placeholder='例: ["M", 0, 0, "L", 10, 10]' />
+                    <input
+                      v-model="item.dataString"
+                      class="w-full p-1 border rounded"
+                      placeholder='例: ["M", 0, 0, "L", 10, 10]'
+                    />
                   </div>
                 </template>
               </div>
             </div>
-            <button @click="addItem" class="px-2 py-1 bg-blue-100 rounded text-blue-700 text-xs hover:bg-blue-200">
+            <button
+              @click="addItem"
+              class="px-2 py-1 bg-blue-100 rounded text-blue-700 text-xs hover:bg-blue-200"
+            >
               + アイテム追加
             </button>
           </div>
 
-          <textarea v-model="templateJson"
+          <textarea
+            v-model="templateJson"
             class="w-full h-96 font-mono text-sm p-4 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-            placeholder="Paste your .template JSON here..."></textarea>
+            placeholder="Paste your .template JSON here..."
+          ></textarea>
 
           <div v-if="error" class="mt-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
             <p class="text-red-700 font-semibold">Error:</p>
             <p class="text-red-600 text-sm mt-1">{{ error }}</p>
           </div>
 
-          <div v-if="templateData && !error" class="mt-4 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
+          <div
+            v-if="templateData && !error"
+            class="mt-4 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg"
+          >
             <p class="text-blue-700 font-semibold">{{ templateData.name }}</p>
             <p class="text-blue-600 text-sm">Author: {{ templateData.author }}</p>
             <p class="text-blue-600 text-sm">Orientation: {{ templateData.orientation }}</p>
@@ -111,13 +157,11 @@
           </div>
         </div>
 
-
         <div class="mt-4 text-sm text-gray-600">
           <p>Canvas: {{ canvasWidth }} × {{ canvasHeight }}px</p>
           <!-- <p>Scale: {{ scale.toFixed(2) }}x</p> -->
           <p>Device: {{ deviceDimensions?.name ?? '' }}</p>
         </div>
-
 
         <!-- Preview Panel -->
         <div class="bg-white rounded-lg shadow-lg p-6">
@@ -125,14 +169,24 @@
 
           <div class="flex justify-center items-start overflow-auto">
             <div class="relative flex-shrink-0 border border-gray-300" :style="canvasStyle">
-              <svg :width="canvasWidth" :height="canvasHeight" :viewBox="`0 0 ${canvasWidth} ${canvasHeight}`"
-                class="absolute inset-0">
+              <svg
+                :width="canvasWidth"
+                :height="canvasHeight"
+                :viewBox="`0 0 ${canvasWidth} ${canvasHeight}`"
+                class="absolute inset-0"
+              >
                 <g v-for="(item, index) in renderedItems" :key="index">
                   <template v-if="item.type === 'path'">
                     <path :d="item.d" stroke="#000000" stroke-width="1.5" fill="none" />
                   </template>
                   <template v-else-if="item.type === 'text'">
-                    <text :x="item.x" :y="item.y" :font-size="item.fontSize" fill="#000000" font-family="sans-serif">
+                    <text
+                      :x="item.x"
+                      :y="item.y"
+                      :font-size="item.fontSize"
+                      fill="#000000"
+                      font-family="sans-serif"
+                    >
                       {{ item.text }}
                     </text>
                   </template>
@@ -140,7 +194,6 @@
               </svg>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -230,46 +283,80 @@ const deviceType = ref<'rmpp' | 'rmppm'>('rmpp')
 
 // テンプレート JSON & 編集用
 const templateJson = ref(`{
-              "name": "Grid 5mm",
-              "author": "Custom",
-              "templateVersion": "1.0.0",
-              "formatVersion": 1,
-              "categories": ["Grids"],
-              "orientation": "portrait",
-              "constants": [
-                { "gridSize": 45 },
-                { "magicOffset": -22 },
-                { "xpos": "templateWidth / 2 - templateHeight / 2 + magicOffset" }
-              ],
-              "items": [
+    "name": "Checklist",
+    "author": "reMarkable",
+    "templateVersion": "1.0.0",
+    "formatVersion": 1,
+    "categories": ["Planners"],
+    "orientation": "portrait",
+    "constants": [
+        {"mobileMaxWidth": 1000},
+        {"mobileTextOffsetX": "templateWidth - 212"},
+        {"mobileBoxOffsetX": 125},
+        {"mobileBoxOffsetY": 257},
+        {"mobileLineOffsetX": 205},
+        {"mobileLineOffsetY": 179},
+        {"mobileTextOffsetY": 138},
+
+        {"boxSize": 55},
+        {"magicTextOffsetY": 152},
+        {"magicLineOffsetY": 192},
+        {"boxesOffsetY": "templateWidth > mobileMaxWidth ? 270 : mobileBoxOffsetY"},
+        {"magicTextOffsetX": "templateWidth / 2 + 522"},
+        {"textOffsetX": "templateWidth > mobileMaxWidth ? magicTextOffsetX : mobileTextOffsetX"},
+        {"textOffsetY": "templateWidth > mobileMaxWidth ? magicTextOffsetY : mobileTextOffsetY"},
+        {"singleLineOffsetY": "templateWidth > mobileMaxWidth ? magicLineOffsetY : mobileLineOffsetY"},
+
+        {"magicBoxOffsetX": 125},
+        {"offsetX": "templateWidth > mobileMaxWidth ? magicBoxOffsetX : mobileBoxOffsetX"},
+        {"magicLineOffsetX": "templateWidth / 2 - templateHeight / 2 + 445"},
+        {"lineOffsetX": "templateWidth > mobileMaxWidth ? magicLineOffsetX : mobileLineOffsetX"}
+    ],
+    "items": [
+        {
+            "type": "text",
+            "text": "Deadline",
+            "fontSize": 24,
+            "position": {
+                "x": "textOffsetX",
+                "y": "textOffsetY"
+            }
+        },
+        {
+            "type": "path",
+            "data": [
+                "M", "-textOffsetX", "singleLineOffsetY", "L", "templateHeight", "singleLineOffsetY"
+            ]
+        },
+        {
+            "type": "group",
+            "boundingBox": {
+                "x": "lineOffsetX",
+                "y": "boxesOffsetY",
+                "width": "templateHeight",
+                "height": 97.4
+            },
+            "repeat": {
+                "rows": "down"
+            },
+            "children": [
                 {
-                  "id": "hlines",
-                  "type": "group",
-                  "boundingBox": { "x": 0, "y": 0, "width": "templateWidth", "height": "gridSize" },
-                  "repeat": { "rows": "infinite", "columns": "infinite" },
-                  "children": [
-                    {
-                      "id": "hline",
-                      "type": "path",
-                      "data": [ "M", 0, 0, "L", "parentWidth", 0 ]
-                    }
-                  ]
-                },
-                {
-                  "id": "vlines",
-                  "type": "group",
-                  "boundingBox": { "x": "xpos", "y": 0, "width": "gridSize", "height": "templateHeight" },
-                  "repeat": { "rows": "infinite", "columns": "infinite" },
-                  "children": [
-                    {
-                      "id": "vline",
-                      "type": "path",
-                      "data": [ "M", 0, 0, "L", 0, "parentHeight" ]
-                    }
-                  ]
+                    "type": "path",
+                    "data": [
+                        "M", "-offsetX", 0,
+                        "L", "boxSize - offsetX", 0,
+                        "L", "boxSize - offsetX", "boxSize",
+                        "L", "-offsetX", "boxSize",
+                        "Z",
+
+                        "M", 0, "boxSize", "L", "templateHeight", "boxSize"
+                    ]
                 }
-              ]
-            }`)
+            ]
+        }
+    ]
+}
+`)
 
 const templateData = ref<TemplateData | null>(null)
 const error = ref<string>('')
@@ -355,32 +442,7 @@ function updateTemplateFromUI() {
     })
 
   // Items: itemsEdit -> TemplateItem[]
-  td.items = itemsEdit.value.map((item: any) => {
-    const newItem: any = { ...item }
-    // For path, parse dataString to array
-    if (item.type === 'path' && item.dataString) {
-      try {
-        newItem.data = JSON.parse(item.dataString)
-      } catch {
-        newItem.data = []
-      }
-    }
-    // For group, children cleanup
-    if (item.type === 'group' && Array.isArray(item.children)) {
-      newItem.children = item.children.map((child: any) => {
-        const ch = { ...child }
-        if (ch.type === 'path' && ch.dataString) {
-          try {
-            ch.data = JSON.parse(ch.dataString)
-          } catch {
-            ch.data = []
-          }
-        }
-        return ch
-      })
-    }
-    return newItem
-  })
+  td.items = itemsEdit.value.map((item: any) => fromEditableItem(item))
 
   // JSON反映
   templateJson.value = JSON.stringify(td, null, 2)
@@ -424,12 +486,40 @@ function removeChild(parentIdx: number, childIdx: number) {
   updateTemplateFromUI()
 }
 
+// 再帰的にUIデータへ変換
+function toEditableItem(item: any): any {
+  const newItem = { ...item }
+  if (item.type === 'path' && Array.isArray(item.data)) {
+    newItem.dataString = JSON.stringify(item.data)
+  }
+  if (item.type === 'group' && Array.isArray(item.children)) {
+    newItem.children = item.children.map((child: any) => toEditableItem(child))
+  }
+  return newItem
+}
+
+// 再帰的にJSONデータへ変換
+function fromEditableItem(item: any): any {
+  const newItem: any = { ...item }
+  if (item.type === 'path' && typeof item.dataString === 'string') {
+    try {
+      newItem.data = JSON.parse(item.dataString)
+    } catch {
+      newItem.data = []
+    }
+    delete newItem.dataString
+  }
+  if (item.type === 'group' && Array.isArray(item.children)) {
+    newItem.children = item.children.map((child: any) => fromEditableItem(child))
+  }
+  return newItem
+}
+
 // --- Watchers for UI編集値の反映 ---
 watch(constantsEdit, updateTemplateFromUI, { deep: true })
 watch(itemsEdit, updateTemplateFromUI, { deep: true })
 
 // テキストエリア直編集時のパース
-
 watch(
   templateJson,
   (newVal) => {
@@ -455,20 +545,7 @@ watch(
       itemsEdit.value = []
       if (parsed.items) {
         parsed.items.forEach((item: any) => {
-          const newItem = { ...item }
-          if (item.type === 'path' && Array.isArray(item.data)) {
-            newItem.dataString = JSON.stringify(item.data)
-          }
-          if (item.type === 'group' && Array.isArray(item.children)) {
-            newItem.children = item.children.map((child: any) => {
-              const ch = { ...child }
-              if (ch.type === 'path' && Array.isArray(ch.data)) {
-                ch.dataString = JSON.stringify(ch.data)
-              }
-              return ch
-            })
-          }
-          itemsEdit.value.push(newItem)
+          itemsEdit.value.push(toEditableItem(item))
         })
       }
     } catch (e) {
@@ -638,5 +715,5 @@ function buildPathData(
 </script>
 
 <style>
-@import "tailwindcss";
+@import 'tailwindcss';
 </style>
